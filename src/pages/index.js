@@ -1,11 +1,12 @@
 import React from 'react'
-import till from '../images/till.png'
+import PropTypes from 'prop-types'
+import Img from 'gatsby-image'
 
-const IndexPage = () => (
+const IndexPage = ({ data }) => (
   <div className="content">
     <div className="split">
       <div>
-        <img src={till} className="logo" alt="Till Schmidt" />
+        <Img sizes={data.till.childImageSharp.sizes} className="logo" />
       </div>
       <div>
         <p>
@@ -50,4 +51,20 @@ const IndexPage = () => (
   </div>
 )
 
+IndexPage.propTypes = {
+  data: PropTypes.shape().isRequired,
+}
+
 export default IndexPage
+
+export const query = graphql`
+  query GatsbyImageQuery {
+    till: file(relativePath: { eq: "till.png" }) {
+      childImageSharp {
+        sizes(maxWidth: 700) {
+          ...GatsbyImageSharpSizes_withWebp
+        }
+      }
+    }
+  }
+`
